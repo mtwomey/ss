@@ -7,18 +7,23 @@ let os = require('os');
 let ini = require('node-ini');
 let readlineSync = require('readline-sync');
 
-let awsConfig = getAwsConfig();
-let ssConfig = getSSConfig();
-let ssCurrentAccount = ssConfig.accounts.find(account => {
-    if (account.name === ssConfig.currentAccount)
-        return true;
-});
 
-taws.config({
-    region: awsConfig[ssConfig.currentAccount].region,
-    accessKeyId: awsConfig[ssConfig.currentAccount].aws_access_key_id,
-    secretAccessKey: awsConfig[ssConfig.currentAccount].aws_secret_access_key
-});
+let awsConfig, ssConfig, ssCurrentAccount;
+function initialize(){
+    awsConfig = getAwsConfig();
+    ssConfig = getSSConfig();
+    ssCurrentAccount = ssConfig.accounts.find(account => {
+        if (account.name === ssConfig.currentAccount)
+            return true;
+    });
+
+    taws.config({
+        region: awsConfig[ssConfig.currentAccount].region,
+        accessKeyId: awsConfig[ssConfig.currentAccount].aws_access_key_id,
+        secretAccessKey: awsConfig[ssConfig.currentAccount].aws_secret_access_key
+    });
+}
+
 
 function getAwsConfig(){
     // Combine config and credentials into one object for easier dealing
@@ -34,11 +39,13 @@ function getSSConfig(){
     if (fs.existsSync(`${os.homedir()}/.ss`) && fs.existsSync(`${os.homedir()}/.ss/config`)) {
         return JSON.parse(fs.readFileSync(`${os.homedir()}/.ss/config`));
     } else {
-        return setupSSConfig()
+        console.log('Run \'ss --configure\' to setup...');
+        process.exit();
     }
 }
 
 function setupSSConfig(){
+    awsConfig = getAwsConfig();
     if (!fs.existsSync(`${os.homedir()}/.ss`)) {
         fs.mkdirSync(`${os.homedir()}/.ss`);
     }
@@ -96,6 +103,11 @@ function getAwsData() {
 
 function main() {
     processArgv(argv);
+    if (argv.configure) {
+        setupSSConfig();
+        process.exit();
+    }
+    initialize();
     if (argv.refresh) {
         awsRefresh()
             .then(() => {
@@ -151,6 +163,10 @@ function processArgv(argv) {
     if (typeof argv.asg === 'string') {
         argv._.push(argv.asg);
         argv.asg = true;
+    }
+    if (typeof argv.configure === 'string') {
+        argv._.push(argv.configure);
+        argv.configure = true;
     }
 }
 

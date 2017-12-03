@@ -1,0 +1,24 @@
+{
+  "name": "ss",
+  "description": "",
+  "version": "1.0.0",
+  "main": "ss.js",
+  "dependencies": {
+    "node-ini": "^1.0.0",
+    "node-pty": "^0.7.3",
+    "readline-sync": "^1.4.7",
+    "synchronize": "^2.0.0",
+    "taws": "git+ssh://git@github.com/mtwomey/taws.git#v1.0.0",
+    "tspect": "git+ssh://git@github.com/mtwomey/tspect.git#v1.0.0",
+    "yargs": "^9.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "ss": "bin/ss.js"
+  }
+}

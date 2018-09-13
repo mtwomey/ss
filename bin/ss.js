@@ -30,7 +30,9 @@ function getAwsConfig(){
     let credentials = ini.parseSync(`${os.homedir()}/.aws/credentials`);
     let config = ini.parseSync(`${os.homedir()}/.aws/config`);
     Object.keys(credentials).forEach(key => {
-        credentials[key].region = config[`profile ${key}`].region
+        if (config[`profile ${key}`]) {
+            credentials[key].region = config[`profile ${key}`].region;
+        }
     });
     return credentials;
 }
@@ -70,12 +72,12 @@ let ptyProcess;
 function awsSSH(proposedLogins, i) { // Can do this with callbacks or promises
     i = i || 0;
     ptyProcess = tspect.spawn('ssh', ['-t', ssCurrentAccount.jump, 'ssh -i', `"${proposedLogins[i].key}" ${proposedLogins[i].username}@${proposedLogins[i].host}`]);
-    ptyProcess.expect(['$', '\]#', 'Are you sure you want to continue connecting', 'Please login as the user', 'Permission denied'], match => {
+    ptyProcess.expect(['$', '\]#', 'Are you sure you want to continue connecting', 'Please login as the user', 'Permission denied', 'password:'], match => {
         if (match === 'Are you sure you want to continue connecting') {
             ptyProcess.write('yes\n');
             awsSSH(proposedLogins, i);
         }
-        else if ((match !== '$') && (match !== ']#')) {
+        else if (((match !== '$') && (match !== ']#')) || match == 'password:') {
             ptyProcess.write('~.');
             if (i < proposedLogins.length - 1)
                 awsSSH(proposedLogins, i + 1);

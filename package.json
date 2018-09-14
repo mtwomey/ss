@@ -7,8 +7,8 @@
     "node-ini": "^1.0.0",
     "node-pty": "^0.7.3",
     "readline-sync": "^1.4.7",
-    "taws": "git+ssh://git@github.com/mtwomey/taws.git#v1.0.0",
-    "tspect": "git+ssh://git@github.com/mtwomey/tspect.git#v1.0.0",
+    "taws": "git+http://git@github.com/mtwomey/taws.git#v1.0.0",
+    "tspect": "git+http://git@github.com/mtwomey/tspect.git#v1.0.0",
     "yargs": "^9.0.1"
   },
   "devDependencies": {},

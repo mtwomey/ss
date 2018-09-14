@@ -7,7 +7,6 @@ let os = require('os');
 let ini = require('node-ini');
 let readlineSync = require('readline-sync');
 
-
 let awsConfig, ssConfig, ssCurrentAccount;
 function initialize(){
     awsConfig = getAwsConfig();
@@ -23,7 +22,6 @@ function initialize(){
         secretAccessKey: awsConfig[ssConfig.currentAccount].aws_secret_access_key
     });
 }
-
 
 function getAwsConfig(){
     // Combine config and credentials into one object for easier dealing
@@ -87,8 +85,6 @@ function awsSSH(proposedLogins, i) { // Can do this with callbacks or promises
     })
 }
 
-main();
-
 function getAwsData() {
     try {
         awsData = JSON.parse(fs.readFileSync('/tmp/ss.awsData.json'));
@@ -124,7 +120,7 @@ function main() {
         }
     } else if (argv.use) {
         switchAccounts(argv.use);
-    } else if (argv._.length > 0 && !isNaN(argv._)) {
+    } else if (argv._.length > 0) {
         getAwsData().then(findAndLogin);
     } else {
         process.exit();
@@ -281,3 +277,5 @@ function addUnique(a, o) {
     if (a.indexOf(o) === -1)
         a.push(o)
 }
+
+main();

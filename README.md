@@ -26,7 +26,7 @@ Find a resource
 
 `ss --find [INSTANCE/IP/NAME...ETC]`
 
-Connect to a instance found with the --find command
+Connect to an instance found with the --find command
 
 `ss [#]`
 

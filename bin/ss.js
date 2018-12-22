@@ -70,7 +70,7 @@ let ptyProcess;
 function awsSSH(proposedLogins, i) { // Can do this with callbacks or promises
     i = i || 0;
     ptyProcess = tspect.spawn('ssh', ['-t', ssCurrentAccount.jump, 'ssh -i', `"${proposedLogins[i].key}" ${proposedLogins[i].username}@${proposedLogins[i].host}`]);
-    ptyProcess.expect(['$', '\]#', 'Are you sure you want to continue connecting', 'Please login as the user', 'Permission denied', 'password:'], match => {
+    ptyProcess.expect(['$', '\]#', 'Are you sure you want to continue connecting', 'Please login as the user', 'Permission denied', 'Connection closed', 'password:'], match => {
         if (match === 'Are you sure you want to continue connecting') {
             ptyProcess.write('yes\n');
             awsSSH(proposedLogins, i);

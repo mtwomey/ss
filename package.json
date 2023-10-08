@@ -5,10 +5,10 @@
   "main": "ss.js",
   "dependencies": {
     "node-ini": "^1.0.0",
-    "node-pty": "^0.9.0",
+    "node-pty": "^1.0.0",
     "readline-sync": "^1.4.7",
     "taws": "git+http://git@github.com/mtwomey/taws.git#v1.0.0",
-    "tspect": "git+http://git@github.com/mtwomey/tspect.git#7befbcca28a4e22cbc6e079ee70b8add4f1dd21e",
+    "tspect": "git+http://git@github.com/mtwomey/tspect.git#fae4956506bd170f6b8a381329914b9e8c0ec870",
     "yargs": "^9.0.1"
   },
   "devDependencies": {},

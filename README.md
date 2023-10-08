@@ -1,6 +1,6 @@
 # Installation
 
-```npm i -g https://github.com/mtwomey/ss.git#v1.0.1```
+```npm i -g https://github.com/mtwomey/ss.git#v1.0.2```
 
 # Usage
 
